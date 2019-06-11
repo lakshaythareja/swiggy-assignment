@@ -3,33 +3,35 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin
 buildscript {
     repositories {
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.4.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.5.RELEASE")
     }
 }
 
-plugins {
-    id 'java'
-    id("org.springframework.boot") version "2.1.5.RELEASE" apply false
-    id("io.spring.dependency-management") version "1.0.6.RELEASE"
-}
+apply plugin: "org.springframework.boot"
+apply plugin: "java"
+apply plugin: "io.spring.dependency-management"
 
 group 'Swiggy'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
-version = '1.0'
 
-task fatJar(type: Jar) {
+jar {
+    baseName = 'swiggy'
+    version =  '1.0.0'
+/*
     manifest {
-        attributes 'Implementation-Title': 'Swiggy',
-                'Implementation-Version': version,
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
                 'Main-Class': 'Swiggy.Application'
-    }
-    baseName = project.name + '-all'
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
+        )
+    }  
+*/
 }
 
 repositories {
@@ -37,6 +39,7 @@ repositories {
 }
 
 dependencies {
+    implementation "org.springframework.boot:spring-boot-starter"
     implementation 'org.springframework.boot:spring-boot-starter-web'
     //providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
