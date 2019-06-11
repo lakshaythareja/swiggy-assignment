@@ -19,18 +19,19 @@ group 'Swiggy'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
+version = '1.0'
 
-jar {
-    enabled = true
-    baseName = 'swiggy'
-    version =  '1.0.0'
+task fatJar(type: Jar) {
     manifest {
-        attributes(
-                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+        attributes 'Implementation-Title': 'Swiggy',
+                'Implementation-Version': version,
                 'Main-Class': 'Swiggy.Application'
-        )
     }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }
+
 repositories {
     mavenCentral()
 }
