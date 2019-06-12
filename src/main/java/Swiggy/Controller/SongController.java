@@ -117,6 +117,7 @@ public class SongController {
     ){
         ArrayList<Song> songs = new ArrayList<>();
         ArrayList<String> localTags= new ArrayList<>();
+        int i=0;
         for(Long tag : tags){
             List<Song> local = songRepository.selectSongsByTag(tag);
             Tags localTag = tagsRepository.getTagsByTagId(tag);
@@ -124,7 +125,12 @@ public class SongController {
                 localTags.add(localTag.getName());
             else
                 System.out.println("tag is empty "+tag);
-            songs.addAll(local);
+            if(i==0) {
+                songs.addAll(local);
+            }else{
+                songs.removeIf(song -> !local.contains(song));
+            }
+            i++;
         }
         List<Song> songsWithoutDuplicates = songs.stream()
                 .distinct()
