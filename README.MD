@@ -23,7 +23,7 @@ Ex :  curl  -X POST -d "name=O Mere Sanam&artistId=7&albumId=13" http://Swiggy-e
 Ex :  curl  -X POST -d "name=O Mere Sanam" http://Swiggy-env-2.5ipvppejxn.ap-south-1.elasticbeanstalk.com/song/delete
 
 5) Get Song Details => Parameters : name
-Ex :  curl  -X POST -d "name=O Mere Sanam" http://Swiggy-env-2.5ipvppejxn.ap-south-1.elasticbeanstalk.com/song/get
+Ex :  curl  -X GET http://Swiggy-env-2.5ipvppejxn.ap-south-1.elasticbeanstalk.com/song/get?name="Tera%20Suroor"
 
 6) Tag a song => Parameters : name (Song name), tagId
 Ex : curl  -X POST -d "name=O Mere Sanam&tagId=26" http://Swiggy-env-2.5ipvppejxn.ap-south-1.elasticbeanstalk.com/song/tag
