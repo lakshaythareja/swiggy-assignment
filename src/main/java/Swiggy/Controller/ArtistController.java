@@ -21,10 +21,14 @@ public class ArtistController {
     String createArtist(
             @RequestParam(name = "name")String name
     ){
-        Artist artist = artistRepository.save(new Artist(name));
-        if(artist != null)
-            return UtilityFunctions.createMessage(200,"Created successfully").toString();
-        else
-            return UtilityFunctions.createMessage(500,"Unable to create artist").toString();
+        try {
+            Artist artist = artistRepository.save(new Artist(name));
+            if (artist != null)
+                return UtilityFunctions.createMessage(200, "Created successfully").toString();
+            else
+                return UtilityFunctions.createMessage(500, "Unable to create artist").toString();
+        }catch (Exception e){
+            return UtilityFunctions.createMessage(500, "Unable to create artist").toString();
+        }
     }
 }

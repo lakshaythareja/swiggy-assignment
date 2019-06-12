@@ -21,11 +21,15 @@ public class AlbumController {
     String createAlbum(
             @RequestParam(name = "name")String name
     ){
-        Album album = albumRepository.save(new Album(name,0));
-        if(album != null)
-            return UtilityFunctions.createMessage(200,"Created successfully").toString();
-        else
-            return UtilityFunctions.createMessage(500,"Unable to create album").toString();
+        try {
+            Album album = albumRepository.save(new Album(name, 0));
+            if (album != null)
+                return UtilityFunctions.createMessage(200, "Created successfully").toString();
+            else
+                return UtilityFunctions.createMessage(500, "Unable to create album").toString();
+        }catch (Exception e){
+            return UtilityFunctions.createMessage(500, "Unable to create album").toString();
+        }
     }
 }
 
