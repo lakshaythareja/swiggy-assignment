@@ -40,13 +40,17 @@ public class SongController {
         Artist artist = artistRepository.getArtistByArtistId(artistId);
         if(artist==null)
             return UtilityFunctions.createMessage(500,"Unable to create song, no such artist exists").toString();
-        Song song = songRepository.save(new Song(name,album,artist));
-        if(song!=null)
-            albumRepository.updateTracks(albumId);
-        if(song != null)
-            return UtilityFunctions.createMessage(200,"Created successfully").toString();
-        else
-            return UtilityFunctions.createMessage(500,"Unable to create song").toString();
+        try {
+            Song song = songRepository.save(new Song(name, album, artist));
+            if (song != null)
+                albumRepository.updateTracks(albumId);
+            if (song != null)
+                return UtilityFunctions.createMessage(200, "Created successfully").toString();
+            else
+                return UtilityFunctions.createMessage(500, "Unable to create song").toString();
+        }catch (Exception e){
+            return UtilityFunctions.createMessage(500, "Unable to create song").toString();
+        }
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/song/delete")
@@ -95,11 +99,15 @@ public class SongController {
         if(tag == null)
             return UtilityFunctions.createMessage(500,"Error, no such tag exists").toString();
 
-        SongTags songTag = songTagsRepository.save(new SongTags(song,tag));
-        if(songTag!=null)
-            return UtilityFunctions.createMessage(200, "Created succesfully").toString();
+        try {
+            SongTags songTag = songTagsRepository.save(new SongTags(song, tag));
+            if (songTag != null)
+                return UtilityFunctions.createMessage(200, "Created succesfully").toString();
 
-        return UtilityFunctions.createMessage(500, "Error creating song tag").toString();
+            return UtilityFunctions.createMessage(500, "Error creating song tag").toString();
+        }catch (Exception e){
+            return UtilityFunctions.createMessage(500, "Error creating song tag").toString();
+        }
     }
 
     @RequestMapping(value = "/explore", method = RequestMethod.GET)

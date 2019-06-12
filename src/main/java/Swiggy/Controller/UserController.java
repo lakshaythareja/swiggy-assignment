@@ -36,12 +36,15 @@ public class UserController {
     String createUser(
             @RequestParam(value = "name")String name
     ){
-        User user = userRepository.save(new User(name));
-        if(user!=null)
-            return UtilityFunctions.createMessage(200,"Created successfully").toString();
-        else
-            return UtilityFunctions.createMessage(500,"Unable to create user").toString();
-
+        try {
+            User user = userRepository.save(new User(name));
+            if (user != null)
+                return UtilityFunctions.createMessage(200, "Created successfully").toString();
+            else
+                return UtilityFunctions.createMessage(500, "Unable to create user").toString();
+        }catch (Exception e){
+            return UtilityFunctions.createMessage(500, "Unable to create user").toString();
+        }
     }
 
     @RequestMapping(value = "/like", method = RequestMethod.POST)

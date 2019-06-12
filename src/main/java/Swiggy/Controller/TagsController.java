@@ -21,12 +21,15 @@ public class TagsController {
     String createTag(
             @RequestParam(value = "name")String name
     ){
-        Tags tag = tagsRepository.save(new Tags(name));
-        if(tag!= null)
-            return UtilityFunctions.createMessage(200,"Created successfully").toString();
-        else
-            return UtilityFunctions.createMessage(500,"Unable to create tag").toString();
-
+        try {
+            Tags tag = tagsRepository.save(new Tags(name));
+            if (tag != null)
+                return UtilityFunctions.createMessage(200, "Created successfully").toString();
+            else
+                return UtilityFunctions.createMessage(500, "Unable to create tag").toString();
+        }catch (Exception e){
+            return UtilityFunctions.createMessage(500, "Unable to create tag").toString();
+        }
     }
 
 }
